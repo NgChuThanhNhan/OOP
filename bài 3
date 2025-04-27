@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cmath>
+
+class Voi {
+private:
+    double canNang; // tính bằng kg
+    double chieuCao; // tính bằng mét
+public:
+    Voi(double w, double h) : canNang(w), chieuCao(h) {}
+    void hienThi() {
+        std::cout << "Con voi: Can nang = " << canNang << "kg, Chieu cao = " << chieuCao << "m\n";
+    }
+};
+
+class Diem {
+private:
+    double x;
+    double y;
+public:
+    Diem(double xCoord, double yCoord) : x(xCoord), y(yCoord) {}
+    void hienThi() {
+        std::cout << "Diem: (" << x << ", " << y << ")\n";
+    }
+};
+
+class Vector {
+private:
+    double x;
+    double y;
+public:
+    Vector(double xComp, double yComp) : x(xComp), y(yComp) {}
+    void hienThi() {
+        std::cout << "Vector: (" << x << ", " << y << ")\n";
+    }
+    double doLon() {
+        return sqrt(x * x + y * y);
+    }
+};
+
+int main() {
+    // Khởi tạo và hiển thị thông tin của lớp Voi
+    Voi voi1(500.0, 3.0);
+    std::cout << "Thong tin con voi:\n";
+    voi1.hienThi();
+
+    // Khởi tạo và hiển thị thông tin của lớp Diem
+    Diem diem1(3.0, 4.0);
+    std::cout << "\nThong tin diem:\n";
+    diem1.hienThi();
+
+    // Khởi tạo và hiển thị thông tin của lớp Vector
+    Vector vector1(3.0, 4.0);
+    std::cout << "\nThong tin vector:\n";
+    vector1.hienThi();
+    std::cout << "Do lon cua vector: " << vector1.doLon() << "\n";
+
+    return 0;
+}
