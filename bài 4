@@ -1,0 +1,94 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Diem {
+private:
+    double x;
+    double y;
+public:
+    Diem(double xCoord = 0, double yCoord = 0) : x(xCoord), y(yCoord) {}
+    double layX() const { return x; }
+    double layY() const { return y; }
+    void hienThi() const {
+        cout << "(" << x << ", " << y << ")";
+    }
+};
+
+class Line {
+private:
+    Diem A; // Điểm đầu
+    Diem B; // Điểm cuối
+public:
+    // Phương thức thiết lập
+    Line(double x1, double y1, double x2, double y2) : A(x1, y1), B(x2, y2) {
+        cout << "Da tao mot doan thang moi.\n";
+    }
+
+    // Phương thức hủy
+    ~Line() {
+        cout << "Da huy doan thang.\n";
+    }
+
+    // Hàm set() để xác định đoạn thẳng
+    void set(int x1, int y1, int x2, int y2) {
+        A = Diem(x1, y1);
+        B = Diem(x2, y2);
+    }
+
+    // Hàm tính độ dài đoạn thẳng
+    float tinhDoDai() const {
+        double dx = B.layX() - A.layX();
+        double dy = B.layY() - A.layY();
+        return sqrt(dx * dx + dy * dy);
+    }
+
+    // Hàm print() để xuất thông tin đoạn thẳng
+    void print() const {
+        cout << "Doan thang: A";
+        A.hienThi();
+        cout << " den B";
+        B.hienThi();
+        cout << "\n";
+    }
+
+    // Hàm xuất phương trình đường thẳng
+    void xuatPhuongTrinh() const {
+        double x1 = A.layX(), y1 = A.layY();
+        double x2 = B.layX(), y2 = B.layY();
+
+        if (x1 == x2) {
+            cout << "Phuong trinh: x = " << x1 << "\n";
+        } else if (y1 == y2) {
+            cout << "Phuong trinh: y = " << y1 << "\n";
+        } else {
+            // Tính hệ số a và b trong phương trình y = ax + b
+            double a = (y2 - y1) / (x2 - x1);
+            double b = y1 - a * x1;
+            cout << "Phuong trinh: y = " << a << "x + " << b << "\n";
+        }
+    }
+};
+
+int main() {
+    // Khởi tạo một đoạn thẳng với hai điểm A(1, 2) và B(4, 6)
+    Line doanThang(1, 2, 4, 6);
+    
+    // Xuất thông tin đoạn thẳng
+    doanThang.print();
+    
+    // Tính và xuất độ dài đoạn thẳng
+    cout << "Do dai doan thang: " << doanThang.tinhDoDai() << "\n";
+    
+    // Xuất phương trình đường thẳng
+    doanThang.xuatPhuongTrinh();
+    
+    // Sử dụng hàm set() để thay đổi đoạn thẳng thành A(0, 0) và B(3, 3)
+    cout << "\nSau khi set lai:\n";
+    doanThang.set(0, 0, 3, 3);
+    doanThang.print();
+    cout << "Do dai doan thang: " << doanThang.tinhDoDai() << "\n";
+    doanThang.xuatPhuongTrinh();
+
+    return 0;
+}
