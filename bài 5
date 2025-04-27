@@ -1,0 +1,98 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Point2D {
+private:
+    double x;
+    double y;
+public:
+    Point2D(double xCoord = 0, double yCoord = 0) : x(xCoord), y(yCoord) {}
+    double layX() const { return x; }
+    double layY() const { return y; }
+    void hienThi() const {
+        cout << "(" << x << ", " << y << ")";
+    }
+    // Tính khoảng cách giữa hai điểm
+    float khoangCach(const Point2D& other) const {
+        double dx = other.x - x;
+        double dy = other.y - y;
+        return sqrt(dx * dx + dy * dy);
+    }
+};
+
+class TamGiac {
+private:
+    Point2D A; // Đỉnh A
+    Point2D B; // Đỉnh B
+    Point2D C; // Đỉnh C
+public:
+    // Phương thức thiết lập
+    TamGiac(double x1, double y1, double x2, double y2, double x3, double y3) 
+        : A(x1, y1), B(x2, y2), C(x3, y3) {
+        cout << "Da tao mot tam giac moi.\n";
+    }
+
+    // Phương thức hủy
+    ~TamGiac() {
+        cout << "Da huy tam giac.\n";
+    }
+
+    // Hàm set() để xác định tam giác
+    void set(int x1, int y1, int x2, int y2, int x3, int y3) {
+        A = Point2D(x1, y1);
+        B = Point2D(x2, y2);
+        C = Point2D(x3, y3);
+    }
+
+    // Hàm tính chu vi tam giác
+    float tinhChuVi() const {
+        float AB = A.khoangCach(B);
+        float BC = B.khoangCach(C);
+        float CA = C.khoangCach(A);
+        return AB + BC + CA;
+    }
+
+    // Hàm tính diện tích tam giác (sử dụng công thức Heron)
+    float tinhDienTich() const {
+        float AB = A.khoangCach(B);
+        float BC = B.khoangCach(C);
+        float CA = C.khoangCach(A);
+        float p = (AB + BC + CA) / 2; // Nửa chu vi
+        return sqrt(p * (p - AB) * (p - BC) * (p - CA));
+    }
+
+    // Hàm print() để xuất thông tin tam giác
+    void print() const {
+        cout << "Tam giac: A";
+        A.hienThi();
+        cout << ", B";
+        B.hienThi();
+        cout << ", C";
+        C.hienThi();
+        cout << "\n";
+    }
+};
+
+int main() {
+    // Khởi tạo một tam giác với ba điểm A(0, 0), B(3, 0), C(0, 4)
+    TamGiac tamGiac(0, 0, 3, 0, 0, 4);
+    
+    // Xuất thông tin tam giác
+    tamGiac.print();
+    
+    // Tính và xuất chu vi tam giác
+    cout << "Chu vi tam giac: " << tamGiac.tinhChuVi() << "\n";
+    
+    // Tính và xuất diện tích tam giác
+    cout << "Dien tich tam giac: " << tamGiac.tinhDienTich() << "\n";
+    
+    // Sử dụng hàm set() để thay đổi tam giác thành A(1, 1), B(4, 1), C(1, 5)
+    cout << "\nSau khi set lai:\n";
+    tamGiac.set(1, 1, 4, 1, 1, 5);
+    tamGiac.print();
+    cout << "Chu vi tam giac: " << tamGiac.tinhChuVi() << "\n";
+    cout << "Dien tich tam giac: " << tamGiac.tinhDienTich() << "\n";
+
+    return 0;
+}
